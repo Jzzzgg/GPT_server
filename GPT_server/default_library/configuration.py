@@ -58,12 +58,15 @@ class DataConfiguration(BaseConfiguration):
     DataConfiguration 
     Confif class of working project
     """
-    pass
-
-
-
-
-
+    @property
+    def open_ai_secret_key(self) -> str:
+        """
+        Get open ai secret key
+        Return:
+            String
+        """
+        return self.common_data.get(ConfigKeys.open_ai_secret_key)
+    # End open_ai_secret_key function
 
 
 

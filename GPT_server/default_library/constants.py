@@ -13,6 +13,16 @@ CONFIG_PATH = WORK_SPACE.joinpath(RESOURCE, APP_CONFIG)
 ALL_ENV = ["LOCAL", "PROD"]
 
 
+# Dircetion
+BOTTOM = "bottom"
+LEFT = "left"
+TOP = "top"
+RIGHT = "right"
+
+
+# Color 
+BLACK = "black"
+
 
 if __name__ == "__main__":
     pass
