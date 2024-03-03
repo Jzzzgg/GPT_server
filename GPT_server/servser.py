@@ -7,17 +7,22 @@ import sys
 from default_library.utils import (validate_args)
 from default_library.configuration import DataConfiguration
 from resource.gui import gui
-
+from resource.socket import soc
 
 def main() -> int:
     """
     Run main function
+    Args:
+        None
+    Return:
+        Integers
     """
     args = sys.argv
     validate_args(args=args)
     environment = args[1].upper()
     DataConfiguration(environment=environment)
     gui.start()
+    soc.start()
     return 0
 # End mian method
 
