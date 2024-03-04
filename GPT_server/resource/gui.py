@@ -59,7 +59,7 @@ class GUI(object):
         right_frame = LabelFrame(frame, width=message_width, text="Messages")
         right_frame.pack(side=RIGHT)
 
-        self.memessage_box = message_box = Text(right_frame)
+        self.message_box = message_box = Text(right_frame)
         message_box.config(state="disabled")
         message_box.pack(side=LEFT)
     # End draw_window function

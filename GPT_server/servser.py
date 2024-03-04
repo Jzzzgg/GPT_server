@@ -6,7 +6,6 @@ import sys
 # Custom libraries
 from default_library.utils import (validate_args)
 from default_library.configuration import DataConfiguration
-
 from resource.socket import sr
 
 def main() -> int:
@@ -17,7 +16,8 @@ def main() -> int:
     Return:
         Integers
     """
-    args = sys.argv
+    # args = sys.argv
+    args = ["", 'LOCAL']
     validate_args(args=args)
     environment = args[1].upper()
     DataConfiguration(environment=environment)
