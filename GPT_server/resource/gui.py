@@ -2,7 +2,7 @@
 Create a GUI to display message
 """
 
-from tkinter import *
+from tkinter import (Frame, LabelFrame, Text, Entry, Tk)
 from default_library.constants import (BOTTOM, TOP, LEFT, RIGHT, BLACK)
 
 class GUI(object):
