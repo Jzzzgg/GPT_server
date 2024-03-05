@@ -1,7 +1,15 @@
+"""
+Socket server classs
+"""
 import socketserver
-from tkinter import Tk, END
-from default_library.constants import HOST, PORT
+import threading as th
+from tkinter import END
+from default_library.configuration import DataConfiguration
 from resource.gui import gui
+
+
+iplist = []
+# you could use database to track ip address
 
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
@@ -9,17 +17,14 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     Create a server socket
     """
     def handle(self):
-        
-        # self.request is the TCP socket connected to the client
-        self.data = self.rfile.readline().strip()
-        gui.username_box.config(state='normal')
-        gui.message_box.config(state='normal')
-        gui.username_box.insert(END, self.client_address[0])
-        print("Received from {}:".format(self.client_address[0]))
-        print(self.data)
-        gui.message_box.insert(END, self.data)
-        gui.username_box.config(state='disabled')
-        gui.message_box.config(state='disabled')
+        self.data = self.request.recv(1024).strip()
+        gui_enable()
+        user_ip = str(self.client_address[0])
+        if user_ip not in iplist:
+            gui.username_box.insert(END, (user_ip +"\n"))
+            iplist.append(user_ip)
+        gui.message_box.insert(END, ("User: "+ self.data.decode('utf-8')+"\n"))
+        gui_disable()
     # End handle function
 # End MyTCPHandler class
 
@@ -28,34 +33,49 @@ class ServerRunner(object):
     """
     A class controls MyTCPHandler
     """
-    def __init__(self) -> None:
+    def __init__(self):
         """
         Rerturn:
             None
-        """
-        self.sever = None
+        """ 
+        
+        self.server = None
     # End init built in
     
 
-    def start(self) -> None:
-        """
-        start running server
-        """
-        gui.start()
-        # Create the server, binding to localhost on port 9999
-        with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as server:
-            # Activate the server; this will keep running until you
-            # interrupt the program with Ctrl-C
-            self.server = server
-            # self.server.serve_forever()
-    # End start function
-    
-
-    def end_connection(self) -> None:
+    def end_connection(self):
         """
         Kill the connection
         """
-        self.sever.shutdown()
+        self.server.shutdown()
+    # End end_conection function
+        
+
+    def start(self, config: DataConfiguration):
+        """
+        start running server
+        """
+        try:
+            process_gui = th.Thread(target=gui.start)
+            process_gui.start()
+            with socketserver.TCPServer((config.host_address, config.port_number), 
+                                        MyTCPHandler) as server:
+                self.server = server
+                self.server.serve_forever()
+        except KeyboardInterrupt:
+            print("Server stop")
+    # End start function
+# End ServerRunner class
+        
+
+def gui_enable():
+    gui.message_box.config(state='normal')
+    gui.username_box.config(state='normal')
+
+
+def gui_disable(): 
+    gui.message_box.config(state='disabled')    
+    gui.username_box.config(state='disabled')
 
 
 sr = ServerRunner()

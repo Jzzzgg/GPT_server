@@ -3,10 +3,11 @@ Create a GUI to display message
 """
 
 from tkinter import (Frame, LabelFrame, Text, Entry, Tk)
-from default_library.constants import (BOTTOM, TOP, LEFT, RIGHT, BLACK)
+from default_library.constants import (BOTTOM, TOP, LEFT, RIGHT)
+from default_library.exception import CustomGUIGeneralExcption
 
 class GUI(object):
-    def __init__(self) -> None:
+    def __init__(self):
         """
         Create a tkinter windown
         Args: 
@@ -18,7 +19,7 @@ class GUI(object):
     # End init built-in
     
 
-    def start(self) -> None:
+    def start(self):
         """
         Start GUI and draw window
         Args: 
@@ -26,13 +27,19 @@ class GUI(object):
         Return:"
             None
         """
-        self.window = Tk()
-        self.draw_window()
-        self.window.mainloop()
+        try:
+            self.window = Tk()
+            self.draw_window()
+            self.window.mainloop()
+            
+        except:
+            raise CustomGUIGeneralExcption("Not able to generate GUI")
     # End start function
-        
     
-    def draw_window(self) -> None:
+    def con():
+        ans = asn
+    
+    def draw_window(self):
         """
         Layout of window
         Args:

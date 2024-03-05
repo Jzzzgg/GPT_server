@@ -8,6 +8,7 @@ from default_library.utils import (validate_args)
 from default_library.configuration import DataConfiguration
 from resource.socket import sr
 
+
 def main() -> int:
     """
     Run main function
@@ -20,8 +21,8 @@ def main() -> int:
     args = ["", 'LOCAL']
     validate_args(args=args)
     environment = args[1].upper()
-    DataConfiguration(environment=environment)
-    sr.start()
+    config = DataConfiguration(environment=environment)
+    sr.start(config)
     return 0
 # End mian method
 
